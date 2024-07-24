@@ -1,29 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div id="messages"></div>
+
+    <div id="sendMsg">
+        <input type="text" id="msgTxt" placeholder="Enter Message.....">
+        <input type="submit" id="msgBtn" value="send" onclick="module.sendMsg()">
+    </div>
+
+    <script>
+        module = {};
+    </script>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getDatabase, ref, set, remove, onChildAdded, onChildRemoved  } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-    
+        import { getDatabase, ref, set, remove, onChildAdded, onChildRemoved } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
         const firebaseConfig = {
-          apiKey: "AIzaSyBwYm_qutmWInxPMGhhAIpcZiqq2KIr9rw",
-          authDomain: "coder-c58c0.firebaseapp.com",
-          projectId: "coder-c58c0",
-          storageBucket: "coder-c58c0.appspot.com",
-          messagingSenderId: "54491790829",
-          appId: "1:54491790829:web:85c77887a2bdf5043afbe4"
+            apiKey: "AIzaSyBwYm_qutmWInxPMGhhAIpcZiqq2KIr9rw",
+            authDomain: "coder-c58c0.firebaseapp.com",
+            projectId: "coder-c58c0",
+            storageBucket: "coder-c58c0.appspot.com",
+            messagingSenderId: "54491790829",
+            appId: "1:54491790829:web:85c77887a2bdf5043afbe4"
         };
-      
-        
+
+
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app)
-      </script>
-    
+        const db = getDatabase(app);
+
+        // Variables
+        var msgTxt = document.getElementById('msgTxt');
+        var sender;
+        if (sessionStorage.getItem('sender')) {
+            sender = sessionStorage.getItem('sender');
+        } else{
+            sender = prompt("Please Enter Your Name");
+            sessionStorage.setItem('sender', sender)
+        }
+        // To Send Message
+        module.sendMsg = function sendMsg() {
+            var msg = msgTxt.value;
+            var timestamp = new Date().getTime();
+            set(ref(db, "messages/" + timestamp), {
+                msg : msg,
+                sender : sender
+            })
+        }
+        // To Recieve
+         onChildAdded(ref(db, "messages"),(data)=> {
+            // console.log(data.val().sender + ":" + data.val().msg);
+            if (data.val().sender == sender) {
+                messages.innerHTML += "<div style=justify-content:end id=outer class="+data.key+"><div id=inner class= me > you:  "+data.val().msg+ " <button id=dltMsg onClick=module.dltMsg()>Delete</button></div></div>";
+            }
+         })
+    </script>
+
 </body>
+
 </html>
+<!-- 10:24 -->
