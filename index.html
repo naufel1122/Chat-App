@@ -71,9 +71,10 @@
         module.dltMsg = function dltMsg(key) {
             remove(ref(db, "messages/", +key))
         }
-        onChildRemoved(ref(db, "messages"),(data)=>{
+        onChildRemoved(ref(db, "messages/"),(data)=>{
+            // var msgBox = document.getElementById(data.key);
             var msgBox = document.getElementById(data.key);
-            messages.removeChild(msgBox)
+            messages.removeChild(msgBox);
         })
     </script>
 
