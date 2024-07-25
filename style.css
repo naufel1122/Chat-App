@@ -39,7 +39,7 @@ body {
     height: 100%;
 }
 
-#outer {
+.outer {
     width: 100%;
     margin-top: 10px;
     display: flex;
@@ -54,6 +54,12 @@ body {
 .me {
     background: #25d366;
     color: #fff; 
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    font-size: 1rem;
+}
+.notMe {
+    background: #fff;
+    color: #000; 
     /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
     font-size: 1rem;
 }

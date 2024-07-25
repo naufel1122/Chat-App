@@ -59,9 +59,22 @@
          onChildAdded(ref(db, "messages"),(data)=> {
             // console.log(data.val().sender + ":" + data.val().msg);
             if (data.val().sender == sender) {
-                messages.innerHTML += "<div style=justify-content:end id=outer class="+data.key+"><div id=inner class= me > you:  "+data.val().msg+ " <button id=dltMsg onClick=module.dltMsg()>Delete</button></div></div>";
+                messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class= me > you:  "+data.val().msg+ " <button id=dltMsg onClick=module.dltMsg('++data.key')>Delete</button></div></div>";
+            }
+            else{
+                messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class= notMe > " +data.value().sender+":"+data.val().msg+ " </div></div>";
             }
          })
+
+        //  TO DELETE MSG
+
+        module.dltMsg = function dltMsg(key) {
+            remove(ref(db, "messages/", +key))
+        }
+        onChildRemoved(ref(db, "messages"),(data)=>{
+            var msgBox = document.getElementById(data.key);
+            messages.removeChild(msgBox)
+        })
     </script>
 
 </body>
