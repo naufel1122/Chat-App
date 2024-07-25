@@ -62,7 +62,7 @@
                 messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class= me > you:  "+data.val().msg+ " <button id=dltMsg onClick=module.dltMsg('++data.key')>Delete</button></div></div>";
             }
             else{
-                messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class= notMe > " +data.value().sender+":"+data.val().msg+ " </div></div>";
+                messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class= notMe>"+data.val().sender+":"+data.val().msg+ " </div></div>";
             }
          })
 
